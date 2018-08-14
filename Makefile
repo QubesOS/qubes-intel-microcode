@@ -10,7 +10,7 @@ UNTRUSTED_SUFF := .UNTRUSTED
 FETCH_CMD := wget --no-use-server-timestamps -q -O
 
 URLS := \
-    https://releases.pagure.org/microcode_ctl/microcode_ctl-2.1-16.tar.xz
+    https://releases.pagure.org/microcode_ctl/microcode_ctl-2.1-19.tar.xz
 
 ALL_URLS := $(URLS)
 ALL_FILES := $(notdir $(ALL_URLS))

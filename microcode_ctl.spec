@@ -2,13 +2,13 @@
 %define _sourcedir %(pwd)
 %endif
 
-%define upstream_version 2.1-16
+%define upstream_version 2.1-19
 %global debug_package %{nil}
 
 Summary:        Tool to transform and deploy CPU microcode update for x86
 Name:           microcode_ctl
 Version:        2.1
-Release:        22.qubes2%{?dist}
+Release:        26.qubes1%{?dist}
 Epoch:          2
 License:        GPLv2+ and Redistributable, no modification permitted
 URL:            https://pagure.io/microcode_ctl
@@ -60,6 +60,18 @@ if [ -f /etc/default/grub ]; then
 fi
 
 %changelog
+* Mon Aug 13 2018 Anton Arapov <aarapov@redhat.com> 2:2.1-26
+- Update to upstream 2.1-19. 20180807
+
+* Fri Jul 13 2018 Fedora Release Engineering <releng@fedoraproject.org> - 2:2.1-25
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_29_Mass_Rebuild
+
+* Mon Jul 09 2018 Anton Arapov <aarapov@redhat.com> 2:2.1-24
+- Update to upstream 2.1-18. 20180703
+
+* Wed May 16 2018 Anton Arapov <aarapov@redhat.com> 2:2.1-23
+- Update to upstream 2.1-17. 20180425
+
 * Thu Mar 15 2018 Anton Arapov <aarapov@redhat.com> 2:2.1-22
 - Update to upstream 2.1-16. 20180312
 
