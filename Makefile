@@ -7,8 +7,6 @@ SHELL := bash
 
 UNTRUSTED_SUFF := .UNTRUSTED
 
-FETCH_CMD := wget --no-use-server-timestamps -q -O
-
 URLS := \
 	https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/microcode-20201118.tar.gz
 
@@ -17,6 +15,10 @@ ALL_FILES := $(notdir $(ALL_URLS))
 
 ifneq ($(DISTFILES_MIRROR),)
 ALL_URLS := $(addprefix $(DISTFILES_MIRROR),$(ALL_FILES))
+endif
+
+ifeq ($(FETCH_CMD),)
+$(error "You can not run this Makefile without having FETCH_CMD defined")
 endif
 
 $(ALL_FILES): %: %.sha512
