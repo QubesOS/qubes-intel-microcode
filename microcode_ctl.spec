@@ -18,6 +18,8 @@ Source1:        Makefile.ucode
 Source2:        README
 ExclusiveArch:  %{ix86} x86_64
 
+BuildRequires:  make
+
 %description
 The microcode_ctl utility is a companion to the microcode driver written
 by Tigran Aivazian <tigran@aivazian.fsnet.co.uk>.
