@@ -3,13 +3,13 @@
 %endif
 
 %define upstream_version 2.1-20
-%define microcode_version 20210608
+%define microcode_version 20220207
 %global debug_package %{nil}
 
 Summary:        Tool to transform and deploy CPU microcode update for x86
 Name:           microcode_ctl
 Version:        2.1
-Release:        33.qubes1%{?dist}
+Release:        34.qubes1%{?dist}
 Epoch:          3
 License:        GPLv2+ and Redistributable, no modification permitted
 URL:            https://pagure.io/microcode_ctl
