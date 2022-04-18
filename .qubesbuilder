@@ -1,0 +1,8 @@
+host:
+  rpm:
+    spec:
+    - microcode_ctl.spec
+source:
+  files:
+  - url: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/microcode-20220207.tar.gz
+    sha512: microcode-20220207.tar.gz.sha512
