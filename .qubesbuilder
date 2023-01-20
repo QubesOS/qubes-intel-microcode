@@ -4,5 +4,5 @@ host:
     - microcode_ctl.spec
 source:
   files:
-  - url: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/microcode-20220510.tar.gz
-    sha512: microcode-20220510.tar.gz.sha512
+  - url: https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/microcode-20221108.tar.gz
+    sha512: microcode-20221108.tar.gz.sha512
