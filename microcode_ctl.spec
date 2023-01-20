@@ -49,7 +49,7 @@ make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
 # during system installation (will be done later anyway)
 if [ -f /boot/initramfs-$(uname -r).img ]; then
     dracut -f --kver $(uname -r) /boot/initramfs-$(uname -r).img
-    if [ -d /boot/efi/EFI/qubes ]; then
+    if [ -f /boot/efi/EFI/qubes/initramfs-$(uname -r).img ]; then
         cp /boot/initramfs-$(uname -r).img /boot/efi/EFI/qubes/
     fi
 fi
