@@ -48,10 +48,14 @@ make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
 # update initramfs only if was already generated; skip generating it
 # during system installation (will be done later anyway)
 if [ -f /boot/initramfs-$(uname -r).img ]; then
-    dracut -f --kver $(uname -r) /boot/initramfs-$(uname -r).img
-    if [ -f /boot/efi/EFI/qubes/initramfs-$(uname -r).img ]; then
-        cp /boot/initramfs-$(uname -r).img /boot/efi/EFI/qubes/
-    fi
+    for initrd in /boot/initramfs-*.img; do
+      kver=$(basename "$initrd" .img)
+      kver=${kver#initramfs-}
+      dracut -f --kver "$kver" "/boot/initramfs-$kver.img"
+      if [ -f "/boot/efi/EFI/qubes/initramfs-$kver".img ]; then
+          cp "/boot/initramfs-$kver.img" /boot/efi/EFI/qubes/
+      fi
+    done
 fi
 
 if [ -f /boot/efi/EFI/qubes/xen.cfg ]; then
