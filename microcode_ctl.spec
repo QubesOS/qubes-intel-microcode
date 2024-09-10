@@ -3,7 +3,7 @@
 %endif
 
 %define upstream_version 2.1-37
-%define microcode_version 20240813
+%define microcode_version 20240910
 %global debug_package %{nil}
 
 Summary:        Tool to transform and deploy CPU microcode update for x86
