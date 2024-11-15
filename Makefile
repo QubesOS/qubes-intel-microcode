@@ -6,9 +6,10 @@
 SHELL := bash
 
 UNTRUSTED_SUFF := .UNTRUSTED
+VERSION := $(shell <version)
 
 URLS := \
-	https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/microcode-20240910.tar.gz
+	https://github.com/intel/Intel-Linux-Processor-Microcode-Data-Files/archive/microcode-$(VERSION).tar.gz
 
 ALL_URLS := $(URLS)
 ALL_FILES := $(notdir $(ALL_URLS))

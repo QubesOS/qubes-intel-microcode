@@ -1,0 +1,75 @@
+%if 0%{?qubes_builder}
+%define _sourcedir %(pwd)
+%endif
+
+%define upstream_version 2.1-37
+%define microcode_version @VERSION@
+%global debug_package %{nil}
+
+Summary:        Tool to transform and deploy CPU microcode update for x86
+Name:           microcode_ctl
+Version:        2.1.%{microcode_version}
+Release:        58.qubes1%{?dist}
+Epoch:          3
+License:        GPLv2+ and Redistributable, no modification permitted
+URL:            https://pagure.io/microcode_ctl
+Source0:        microcode-%{microcode_version}.tar.gz
+Source1:        Makefile.ucode
+Source2:        README
+ExclusiveArch:  %{ix86} x86_64
+
+BuildRequires:  make
+
+%description
+The microcode_ctl utility is a companion to the microcode driver written
+by Tigran Aivazian <tigran@aivazian.fsnet.co.uk>.
+
+The microcode update is volatile and needs to be uploaded on each system
+boot i.e. it doesn't reflash your cpu permanently, reboot and it reverts
+back to the old microcode.
+
+%prep
+%setup -q -c -T -n %{name}-%{upstream_version}
+cp %{SOURCE0} %{SOURCE1} %{SOURCE2} ./
+mv Makefile.ucode Makefile
+
+%build
+make CFLAGS="$RPM_OPT_FLAGS" %{?_smp_mflags} \
+             MICROCODE_INTEL=microcode-%{microcode_version}.tar.gz
+
+%install
+make DESTDIR=%{buildroot} PREFIX=%{_prefix} INSDIR=/usr/sbin install clean
+
+%files
+/lib/firmware/*
+%doc /usr/share/doc/microcode_ctl/*
+
+%post
+# update initramfs only if was already generated; skip generating it
+# during system installation (will be done later anyway)
+if [ -f /boot/initramfs-$(uname -r).img ]; then
+    for initrd in /boot/initramfs-*.img; do
+      kver=$(basename "$initrd" .img)
+      kver=${kver#initramfs-}
+      dracut -f --kver "$kver" "/boot/initramfs-$kver.img"
+      if [ -f "/boot/efi/EFI/qubes/initramfs-$kver".img ]; then
+          cp "/boot/initramfs-$kver.img" /boot/efi/EFI/qubes/
+      fi
+    done
+fi
+
+if [ -f /boot/efi/EFI/qubes/xen.cfg ]; then
+    if ! grep -q ucode=scan /boot/efi/EFI/qubes/xen.cfg; then
+        sed -i -e 's:^options=.*:\0 ucode=scan:' /boot/efi/EFI/qubes/xen.cfg
+    fi
+fi
+
+if [ -f /etc/default/grub ]; then
+    if ! grep -q ucode=scan /etc/default/grub; then
+        echo 'GRUB_CMDLINE_XEN_DEFAULT="$GRUB_CMDLINE_XEN_DEFAULT ucode=scan"' >> /etc/default/grub
+        grub2-mkconfig -o /boot/grub2/grub.cfg
+    fi
+fi
+
+%changelog
+@CHANGELOG@
